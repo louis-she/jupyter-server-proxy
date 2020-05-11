@@ -67,6 +67,12 @@ def pingable_ws_connect(request=None,on_message_callback=None,
 
 # from https://stackoverflow.com/questions/38663666/how-can-i-serve-a-http-page-and-a-websocket-on-the-same-url-in-tornado
 class WebSocketHandlerMixin(websocket.WebSocketHandler):
+    
+    # JupyterLab 中没办法配置 Notebook 的 allow_origin 选项
+    # 这里直接放开
+    def check_origin(self, origin):
+        return True
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # since my parent doesn't keep calling the super() constructor,
